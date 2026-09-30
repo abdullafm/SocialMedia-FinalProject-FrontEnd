@@ -1,0 +1,217 @@
+.login-page {
+    align-items: flex-start;
+}
+
+#register-account {
+    width: min(100%, 480px);
+}
+
+.register-card {
+    width: 100%;
+    position: relative;
+    padding: clamp(20px, 4vw, 32px);
+    border-radius: 8px;
+    background: #313338;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.register-card h1 {
+    margin-bottom: 8px;
+}
+
+.register-card > p {
+    margin: 12px 0 0;
+    text-align: left;
+}
+
+.login-card.register-card button[type="submit"] {
+    display: block;
+    margin-top: 20px;
+    position: relative;
+    clear: both;
+}
+
+.register-birth-field {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    margin: 20px 0 0;
+    padding: 0;
+    min-width: 0;
+    min-inline-size: 0;
+}
+
+.register-birth-field legend {
+    display: block;
+    float: none;
+    width: 100%;
+    margin: 0 0 8px;
+    padding: 0;
+}
+
+.register-kicker {
+    margin: 0 0 8px;
+    color: #b5bac1;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.register-kicker span {
+    color: #f23f43;
+}
+
+.register-birth {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+}
+
+.birth-box {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.birth-box:first-child,
+.birth-box:last-child {
+    flex: 0.9 1 0;
+}
+
+.birth-box:nth-child(2) {
+    flex: 1.25 1 0;
+}
+
+.birth-field {
+    width: 100%;
+    height: 44px;
+    padding: 0 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: #1e1f22;
+    color: #b5bac1;
+    font: inherit;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.birth-field span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.birth-field i {
+    font-size: 12px;
+    flex: none;
+}
+
+.birth-box.open .birth-field {
+    border-color: #5865f2;
+    color: #f2f3f5;
+}
+
+.birth-box.open .birth-field i {
+    transform: rotate(180deg);
+}
+
+.birth-box.has-value .birth-field {
+    color: #f2f3f5;
+}
+
+.birth-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + 6px);
+    z-index: 5;
+    max-height: 180px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    overflow: auto;
+    border-radius: 8px;
+    background: #1e1f22;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    scrollbar-width: thin;
+    scrollbar-color: #4e5058 transparent;
+}
+
+.birth-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.birth-list::-webkit-scrollbar-thumb {
+    background: #4e5058;
+    border-radius: 8px;
+}
+
+.birth-list[hidden] {
+    display: none !important;
+}
+
+.birth-list button {
+    width: 100%;
+    min-height: 32px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #f2f3f5;
+    font: inherit;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.birth-list button:hover,
+.birth-list button.on {
+    background: #2b2d31;
+}
+
+.birth-list .fa-check {
+    font-size: 12px;
+    visibility: hidden;
+}
+
+.birth-list button.on .fa-check {
+    visibility: visible;
+}
+
+@media screen and (max-width: 560px) {
+    .register-birth {
+        gap: 6px;
+    }
+
+    .birth-field,
+    .birth-list button {
+        font-size: 13px;
+        padding-inline: 6px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .register-birth {
+        flex-wrap: wrap;
+    }
+
+    .birth-box,
+    .birth-box:first-child,
+    .birth-box:last-child,
+    .birth-box:nth-child(2) {
+        flex: 1 1 calc(50% - 6px);
+    }
+
+    .birth-box:nth-child(2) {
+        flex-basis: 100%;
+    }
+}

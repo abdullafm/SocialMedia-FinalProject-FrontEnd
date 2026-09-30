@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="./assets/js/nav.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord | Login</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="./assets/icons/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="login-bg" aria-hidden="true">
+            <span class="login-blob login-blob-a"></span>
+            <span class="login-blob login-blob-b"></span>
+            <span class="login-blob login-blob-c"></span>
+            <span class="login-star login-star-a"></span>
+            <span class="login-star login-star-b"></span>
+            <span class="login-star login-star-c"></span>
+        </div>
+        <a class="login-brand" href="./login.html" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i><span>Discord</span></a>
+    </header>
+    <main class="login-page">
+        <form class="login-card" id="login-form" action="./index.html">
+            <h1>Welcome back!</h1>
+            <p>We're so excited to see you again!</p>
+            <label for="login-email">Email <span>*</span></label>
+            <input id="login-email" name="email" type="email" autocomplete="email" required>
+            <label for="login-pass">Password <span>*</span></label>
+            <input id="login-pass" name="password" type="password" autocomplete="current-password" required>
+            <button type="submit">Log In</button>
+            <p class="login-switch">Need an account? <a href="./register.html">Register</a></p>
+        </form>
+    </main>
+</body>
+</html>

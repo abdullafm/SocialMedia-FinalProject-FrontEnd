@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: #404eed;
+    color: #f2f3f5;
+    overflow-x: hidden;
+}
+
+.login-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(160deg, #2d1b69 0%, #3c45d4 42%, #2b7bff 100%);
+    pointer-events: none;
+}
+
+.login-blob,
+.login-star {
+    position: absolute;
+    display: block;
+}
+
+.login-blob {
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.login-blob-a {
+    width: 180px;
+    height: 180px;
+    left: 8%;
+    top: 28%;
+}
+
+.login-blob-b {
+    width: 90px;
+    height: 90px;
+    right: 14%;
+    bottom: 18%;
+    background: rgba(88, 101, 242, 0.45);
+}
+
+.login-blob-c {
+    width: 46px;
+    height: 46px;
+    right: 22%;
+    top: 16%;
+    border-radius: 12px;
+    transform: rotate(18deg);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.login-star {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+
+.login-star-a { left: 18%; top: 14%; }
+.login-star-b { right: 28%; top: 42%; }
+.login-star-c { left: 30%; bottom: 16%; }
+
+.login-brand {
+    position: absolute;
+    z-index: 2;
+    top: 24px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.login-brand i {
+    font-size: 26px;
+}
+
+.login-page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 88px 16px 32px;
+}
+
+.login-card {
+    width: min(100%, 480px);
+    padding: 32px;
+    border-radius: 8px;
+    background: #313338;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.login-card h1 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(1.25rem, 1vw + 1rem, 1.5rem);
+    font-weight: 700;
+    color: #f2f3f5;
+}
+
+.login-card > p {
+    margin: 8px 0 20px;
+    text-align: center;
+    color: #b5bac1;
+    font-size: 16px;
+}
+
+.login-card label {
+    display: block;
+    margin: 16px 0 8px;
+    color: #b5bac1;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.login-card label span {
+    color: #f23f43;
+}
+
+.login-card input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 4px;
+    background: #1e1f22;
+    color: #f2f3f5;
+    font: inherit;
+    font-size: 16px;
+    outline: none;
+}
+
+.login-card input:focus {
+    box-shadow: 0 0 0 2px #5865f2;
+}
+.login-switch button,
+.login-switch a {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #00a8fc;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.login-switch button:hover,
+.login-switch a:hover {
+    text-decoration: underline;
+}
+
+.login-card button[type="submit"] {
+    width: 100%;
+    height: 44px;
+    margin-top: 20px;
+    border: 0;
+    border-radius: 4px;
+    background: #5865f2;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-card button[type="submit"]:hover {
+    background: #4752c4;
+}
+
+.login-switch {
+    margin: 12px 0 0;
+    text-align: left;
+    color: #b5bac1;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 720px), screen and (max-height: 760px) {
+    .login-page {
+        align-items: flex-start;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .login-brand {
+        top: 16px;
+        left: 16px;
+        font-size: 18px;
+    }
+
+    .login-card {
+        padding: 24px 16px;
+    }
+
+    .login-card h1 {
+        font-size: 20px;
+    }
+
+    .login-blob-a {
+        width: 120px;
+        height: 120px;
+        left: 0;
+    }
+}
