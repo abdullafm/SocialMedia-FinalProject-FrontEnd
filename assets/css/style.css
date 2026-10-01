@@ -791,62 +791,277 @@ body .friends-view .friends-header .friend-filters {
     align-items: center;
     justify-content: start;
     gap: 8px;
-    overflow-x: auto;
+    overflow: visible;
 }
 
 .friend-filter-pick {
     display: none;
 }
 
-.friend-filter-menu {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-body .friends-view .friends-header .friend-filters button {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    padding: 2px 7px;
-    font-size: 15px;
-    cursor: pointer;
-    font-weight: 400;
-    white-space: nowrap;
-    flex: none;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
-}
-
-body .friends-view .friends-header .friend-filters button:active {
-    transform: scale(0.96);
-}
-
 .friend-filter-glide {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
-    z-index: 0;
-    border-radius: 5px;
-    background: #e1e2e4;
-    pointer-events: none;
+    height: 25px;
+    border-radius: 4px;
+    background: #e3e5e8;
     opacity: 0;
-    transition: transform 0.22s ease, width 0.22s ease, height 0.22s ease, opacity 0.15s ease;
+    transform: translate(0, -50%);
+    transition: transform 0.18s ease, width 0.18s ease, opacity 0.18s ease;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .friend-filter-menu {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 32px;
+    padding: 0;
+    background: transparent;
+    border: 0;
 }
 
 .friend-filter-menu button {
     position: relative;
     z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #060607;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.18s ease, background-color 0.18s ease, transform 0.12s ease;
 }
 
-@container friends-bar (min-width: 641px) {
-    body .friends-view .friends-header .friend-filters .friend-filter-menu button.active {
-        background-color: transparent;
-    }
+.friend-filter-icon,
+.friend-filter-check {
+    display: none;
+}
+
+.friend-filter-text {
+    display: inline-block;
+}
+
+.friend-filter-menu button:hover {
+    color: #060607;
+}
+
+.friend-filter-menu button:active {
+    transform: scale(0.98);
+}
+
+.friend-filter-menu button.active {
+    color: #060607;
+    font-weight: 500;
+}
+
+.friend-filter-menu button[data-filter="add"] {
+    margin-left: 8px;
+    background: #248046;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    transition: background-color 0.17s ease, transform 0.1s ease, box-shadow 0.17s ease;
+}
+
+.friend-filter-menu button[data-filter="add"]:hover {
+    background: #1f7a40;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.friend-filter-menu button[data-filter="add"]:active {
+    background: #1a6837;
+    transform: translateY(0);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown Menu Header: 'Friends Online' with 2 people icon */
+.friend-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 4px 10px 4px;
+    border-bottom: 1px solid #f0f1f3;
+    margin-bottom: 6px;
+    color: #4e5058;
+    font-size: 13px;
+    font-weight: 700;
+    user-select: none;
+    line-height: 1.2;
+}
+
+.friend-menu-header-icon {
+    font-size: 13px;
+    color: #4e5058;
+    flex-shrink: 0;
+}
+
+.friend-menu-header-label {
+    letter-spacing: -0.01em;
+}
+
+/* Selection list */
+.friend-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+}
+
+.friend-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #2e3338;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.friend-menu-item:hover {
+    background-color: #f2f3f5;
+    color: #060607;
+}
+
+.friend-menu-item:active {
+    transform: scale(0.98);
+}
+
+.friend-menu-item.active {
+    background-color: #f2f3f5;
+    font-weight: 600;
+    color: #060607;
+}
+
+.friend-menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Green dot for Online */
+.friend-status-dot.online {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #23a55a;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.friend-menu-item-icon {
+    font-size: 13px;
+    width: 16px;
+    text-align: center;
+    color: #4e5058;
+    flex-shrink: 0;
+}
+
+/* Checkmark on the far right for active item */
+.friend-menu-check {
+    font-size: 12px;
+    color: #23a55a;
+    display: none;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.friend-menu-item.active .friend-menu-check {
+    display: inline-block;
+}
+
+/* Blocked item with red-orange text and red-orange blocked sign */
+.friend-menu-item.blocked-item {
+    color: #da373c;
+}
+
+.friend-menu-item.blocked-item .friend-menu-item-icon {
+    color: #da373c;
+}
+
+.friend-menu-item.blocked-item:hover {
+    background-color: #fef0f0;
+    color: #da373c;
+}
+
+.friend-menu-item.blocked-item.active {
+    background-color: #fef0f0;
+    color: #da373c;
+}
+
+.friend-menu-item.blocked-item.active .friend-menu-check {
+    color: #da373c;
+}
+
+/* Footer: larger vibrant green rounded-rectangle button spanning width */
+.friend-menu-footer {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f1f3;
+    width: 100%;
+}
+
+.friend-menu-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    background-color: #248046;
+    color: #ffffff !important;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(36, 128, 70, 0.22);
+    transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+}
+
+.friend-menu-add-btn:hover {
+    background-color: #1a6334;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(36, 128, 70, 0.32);
+}
+
+.friend-menu-add-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(36, 128, 70, 0.2);
+}
+
+.friend-menu-add-btn i {
+    font-size: 13px;
+    color: #ffffff !important;
+}
+
+.friend-menu-add-btn span {
+    color: #ffffff !important;
 }
 
 @container friends-bar (max-width: 640px) {
@@ -855,43 +1070,73 @@ body .friends-view .friends-header .friend-filters button:active {
         padding-right: 0;
     }
 
+    body .friends-view .friends-header .friend-filters {
+        padding: 0 8px;
+        flex: 0 0 auto;
+    }
+
     .friend-filter-pick {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        height: 28px;
-        padding: 0 10px;
+        gap: 6px;
+        height: 36px;
+        padding: 0 12px;
         border: 0;
-        border-radius: 4px;
-        background: #e9e9ea;
-        color: #060607;
-        font: inherit;
+        border-radius: 10px;
+        background: #e4e5e7;
+        color: #1f2328;
+        font-family: inherit;
+        font-size: 13px;
         font-weight: 600;
+        letter-spacing: 0.02em;
         cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
     }
 
-    .friend-filters {
-        padding: 0 8px;
+    .friend-filter-pick:hover {
+        background: #d8dade;
+        transform: translateY(-1px);
+    }
+
+    .friend-filter-pick:active {
+        transform: translateY(0);
+    }
+
+    .friend-filter-pick i {
+        font-size: 12px;
+        color: #5f6570;
+        transition: transform 0.18s ease;
+    }
+
+    .friend-filters.open .friend-filter-pick i {
+        transform: rotate(180deg);
     }
 
     .friend-filter-menu {
-        display: none;
         position: absolute;
-        z-index: 20;
         top: calc(100% + 8px);
         left: 8px;
-        min-width: min(180px, calc(100vw - 96px));
+        z-index: 30;
+        display: none;
+        width: min(212px, calc(100vw - 20px));
+        max-width: calc(100vw - 20px);
         padding: 6px;
+        border-radius: 14px;
+        background: #ffffff;
+        border: 1px solid rgba(17, 24, 39, 0.08);
+        box-shadow: 0 10px 22px rgba(17, 24, 39, 0.12);
         flex-direction: column;
         align-items: stretch;
-        gap: 2px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        gap: 4px;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+        transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .friend-filters.open .friend-filter-menu {
         display: flex;
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 
     .friend-filter-glide {
@@ -900,25 +1145,95 @@ body .friends-view .friends-header .friend-filters button:active {
 
     .friend-filter-menu button {
         width: 100%;
-        text-align: left;
-        padding: 8px 10px;
+        height: 40px;
+        justify-content: flex-start;
+        padding: 0 11px;
+        border-radius: 10px;
+        background: transparent;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: #243041;
+        transition: all 0.15s ease;
     }
-}
 
-body .friends-view .friends-header .friend-filters button.active {
-    background-color: #e1e2e4;
-    font-weight: 600;
-}
+    .friend-filter-menu button.active {
+        background: #eef0f3;
+        font-weight: 600;
+    }
 
-body .friends-view .friends-header .friend-filters button:hover {
-    background-color: #e1e2e4;
-    font-weight: 500;
-}
+    .friend-filter-menu button[data-filter="blocked"] {
+        color: #dc4446;
+    }
 
-body .friends-view .friends-header .friend-filters button:nth-last-child(1) {
-    background-color: #247f46;
-    color: white;
-    font-weight: 600;
+    .friend-filter-menu button[data-filter="add"] {
+        margin-left: 0;
+        margin-top: 2px;
+        justify-content: center;
+        background: #248046;
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+        transition: background-color 0.17s ease, transform 0.1s ease, box-shadow 0.17s ease;
+    }
+
+    .friend-filter-menu button[data-filter="add"]:hover {
+        background: #1f7a40;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .friend-filter-menu button[data-filter="add"]:active {
+        background: #1a6837;
+        transform: translateY(0);
+    }
+
+    .friend-filter-menu button[data-filter="add"] .friend-filter-icon {
+        color: #fff;
+    }
+
+    .friend-filter-icon,
+    .friend-filter-check {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .friend-filter-icon {
+        width: 18px;
+        font-size: 13px;
+        color: #586173;
+    }
+
+    .friend-filter-menu .friend-status-dot.online {
+        width: 10px;
+        height: 10px;
+        margin-left: 2px;
+        margin-right: 7px;
+        box-shadow: 0 0 0 2px transparent;
+        transition: box-shadow 0.2s ease;
+    }
+
+    .friend-filter-menu button:hover .friend-status-dot.online {
+        box-shadow: 0 0 0 2px rgba(35, 165, 90, 0.2);
+    }
+
+    .friend-filter-text {
+        flex: 1;
+        text-align: left;
+    }
+
+    .friend-filter-check {
+        margin-left: auto;
+        font-size: 14px;
+        color: #243041;
+        opacity: 0;
+    }
+
+    .friend-filter-menu button.active .friend-filter-check {
+        opacity: 1;
+    }
 }
 
 body .friends-view .friends-body {
@@ -4389,19 +4704,79 @@ html.theme-dark .friend-filters button:nth-last-child(1):hover {
     border-radius: 4px;
 }
 
-html.theme-dark .friend-filters .friend-filter-pick {
-    background: #1e1f22 !important;
-    color: #f2f3f5 !important;
+html.theme-dark .friend-filter-glide {
+    background: #3f4248;
+    opacity: 1;
+}
+
+html.theme-dark .friend-filter-menu button {
+    color: #f2f3f5;
 }
 
 @container friends-bar (max-width: 640px) {
     html.theme-dark .friend-filter-menu {
-        background: #111214 !important;
+        background: #2b2d31 !important;
+        border: 1px solid #1e1f22;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
     html.theme-dark .friend-filter-pick {
-        background: #1e1f22 !important;
-        color: #f2f3f5 !important;
+        background: #1e1f22;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    html.theme-dark .friend-filter-pick:hover {
+        background: #35373c;
+        color: #ffffff;
+    }
+
+    html.theme-dark .friend-filter-pick i {
+        color: #ffffff;
+    }
+
+    html.theme-dark .friend-filter-icon {
+        color: #ffffff;
+    }
+    
+    html.theme-dark .friend-filter-check {
+        color: #23a55a;
+    }
+
+    html.theme-dark .friend-filter-menu button {
+        color: #ffffff;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+    }
+
+    html.theme-dark .friend-filter-menu button:hover {
+        background: #35373c;
+        color: #ffffff;
+    }
+
+    html.theme-dark .friend-filter-menu button[data-filter="add"],
+    html.theme-dark .friend-filter-menu button[data-filter="add"] .friend-filter-icon {
+        color: #fff !important;
+    }
+
+    html.theme-dark .friend-filter-menu button.active {
+        background: #404249 !important;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    html.theme-dark .friend-filter-menu button[data-filter="blocked"] {
+        color: #ffffff;
+    }
+
+    html.theme-dark .friend-filter-menu button[data-filter="blocked"]:hover {
+        background: #35373c;
+        color: #ffffff;
+    }
+
+    html.theme-dark .friend-filter-menu button[data-filter="blocked"] .friend-filter-icon {
+        color: #f23f43;
     }
 }
 

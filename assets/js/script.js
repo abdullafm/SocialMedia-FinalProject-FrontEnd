@@ -65,9 +65,27 @@ function openToggle() {
 (function () {
     var pick = document.getElementById("friend-filter-pick");
     var menu = document.getElementById("friend-filter-menu");
-    var label = document.getElementById("friend-filter-label");
     var filters = document.querySelector(".friend-filters");
-    if (!pick || !menu || !filters) return;
+    var label = document.getElementById("friend-filter-label");
+    var glide = menu ? menu.querySelector(".friend-filter-glide") : null;
+    if (!menu || !filters || !pick || !label) return;
+    function isCompactFilter() {
+        return window.matchMedia("(max-width: 640px)").matches;
+    }
+    function closeCompactFilter() {
+        filters.classList.remove("open");
+        pick.setAttribute("aria-expanded", "false");
+    }
+    function syncGlide(button) {
+        if (!glide || !button || button.getAttribute("data-filter") === "add" || isCompactFilter()) {
+            if (glide) glide.style.opacity = "0";
+            return;
+        }
+        glide.style.opacity = "1";
+        glide.style.width = button.offsetWidth + "px";
+        glide.style.height = "25px";
+        glide.style.transform = "translate(" + button.offsetLeft + "px, -50%)";
+    }
     function paintFriends(filter) {
         var onlineTitle = document.getElementById("friends-online-title");
         var allTitle = document.getElementById("friends-all-title");
@@ -127,43 +145,36 @@ function openToggle() {
         title.hidden = !list.querySelector(".blocked-row");
     }
     paintFriends("online");
-    var glide = document.createElement("span");
-    glide.className = "friend-filter-glide";
-    glide.setAttribute("aria-hidden", "true");
-    menu.insertBefore(glide, menu.firstChild);
-    function moveGlide(button) {
-        if (!button || button.getAttribute("data-filter") === "add") {
-            glide.style.opacity = "0";
-            return;
-        }
-        glide.style.opacity = "1";
-        glide.style.width = button.offsetWidth + "px";
-        glide.style.height = button.offsetHeight + "px";
-        glide.style.transform = "translate(" + button.offsetLeft + "px, " + button.offsetTop + "px)";
-    }
-    moveGlide(menu.querySelector("button.active"));
-    window.addEventListener("resize", function () {
-        moveGlide(menu.querySelector("button.active"));
-    });
+    syncGlide(menu.querySelector("button.active"));
     pick.addEventListener("click", function (event) {
+        if (!isCompactFilter()) return;
         event.stopPropagation();
-        var open = filters.classList.toggle("open");
+        var open = !filters.classList.contains("open");
+        filters.classList.toggle("open", open);
         pick.setAttribute("aria-expanded", open ? "true" : "false");
     });
     menu.addEventListener("click", function (event) {
         var button = event.target.closest("button");
         if (!button) return;
-        var items = menu.querySelectorAll("button");
-        for (var i = 0; i < items.length; i++) items[i].classList.toggle("active", items[i] === button);
-        moveGlide(button);
-        if (label) label.textContent = button.textContent;
+        var filter = button.getAttribute("data-filter");
+        if (!filter) return;
+        var menuButtons = menu.querySelectorAll("button[data-filter]");
+        if (filter !== "add") {
+            for (var i = 0; i < menuButtons.length; i++) {
+                if (menuButtons[i].getAttribute("data-filter") !== "add") {
+                    menuButtons[i].classList.toggle("active", menuButtons[i] === button);
+                }
+            }
+            label.textContent = (button.querySelector(".friend-filter-text") || button).textContent.trim();
+            syncGlide(button);
+        }
+
         var online = document.getElementById("friends-online");
         var pending = document.getElementById("friends-pending");
         var blocked = document.getElementById("friends-blocked");
         var add = document.getElementById("friends-add");
         var empty = document.getElementById("friends-empty");
         var now = document.getElementById("active-now");
-        var filter = button.getAttribute("data-filter");
         var showList = filter === "online" || filter === "all";
         var showPending = filter === "pending";
         var showBlocked = filter === "blocked";
@@ -177,12 +188,15 @@ function openToggle() {
         if (showList) paintFriends(filter);
         if (showPending) paintPendingTitle();
         if (showBlocked) paintBlockedTitle();
-        filters.classList.remove("open");
-        pick.setAttribute("aria-expanded", "false");
+        if (isCompactFilter()) closeCompactFilter();
     });
-    document.addEventListener("click", function () {
-        filters.classList.remove("open");
-        pick.setAttribute("aria-expanded", "false");
+    document.addEventListener("click", function (event) {
+        if (!isCompactFilter()) return;
+        if (!filters.contains(event.target)) closeCompactFilter();
+    });
+    window.addEventListener("resize", function () {
+        if (!isCompactFilter()) closeCompactFilter();
+        syncGlide(menu.querySelector("button.active"));
     });
     var form = document.getElementById("add-friend-form");
     var nameInput = document.getElementById("add-friend-name");
