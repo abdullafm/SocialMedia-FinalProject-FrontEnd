@@ -307,3 +307,283 @@ function openToggle() {
         closeMenu();
     });
 })();
+
+// Inline Search - Instagram Style Real-time Search (in Add Friend section)
+(function () {
+    var addFriendBtn = document.querySelector('button[data-filter="add"]');
+    
+    // When Add Friend button is clicked, switch to Add Friend section
+    if (addFriendBtn) {
+        addFriendBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Switch to Add Friend section
+            var online = document.getElementById("friends-online");
+            var pending = document.getElementById("friends-pending");
+            var blocked = document.getElementById("friends-blocked");
+            var add = document.getElementById("friends-add");
+            var empty = document.getElementById("friends-empty");
+            var now = document.getElementById("active-now");
+            
+            if (online) online.hidden = true;
+            if (pending) pending.hidden = true;
+            if (blocked) blocked.hidden = true;
+            if (add) add.hidden = false;
+            if (empty) empty.hidden = true;
+            if (now) now.hidden = true;
+            
+            // Focus on search input
+            var searchInput = document.getElementById("inline-search-input");
+            if (searchInput) searchInput.focus();
+        });
+    }
+    
+    var searchInput = document.getElementById("inline-search-input");
+    var searchClear = document.getElementById("inline-search-clear");
+    var resultsCard = document.getElementById("inline-search-results-card");
+    var searchTable = document.getElementById("inline-search-table");
+    var searchTbody = document.getElementById("inline-search-tbody");
+    var loadingSpinner = document.getElementById("inline-search-loading");
+    var noResults = document.getElementById("inline-search-no-results");
+    var queryText = document.getElementById("inline-search-query");
+    
+    var debounceTimer = null;
+    var DEBOUNCE_DELAY = 300;
+    
+    // Mock user data - replace with real API call
+    var mockUsers = [
+        { username: "yarasa", displayName: "Yarasa", avatar: null, status: "online" },
+        { username: "yarasaxd", displayName: "Yarasa XD", avatar: null, status: "online" },
+        { username: "yarasa404", displayName: "Yarasa 404", avatar: null, status: "offline" },
+        { username: "Mr_Sigma", displayName: "Mr Sigma", avatar: "./assets/img/img-icon 4.jpeg", status: "online" },
+        { username: "Gpro-fighter", displayName: "Gpro Fighter", avatar: "./assets/img/img-icon 3.png", status: "idle" },
+        { username: "Moiz Hussain", displayName: "Moiz Hussain", avatar: "./assets/img/img-icon 2.png", status: "dnd" },
+        { username: "nxn", displayName: "nxn", avatar: "./assets/img/img-icon 1.png", status: "online" },
+        { username: "Unknown_Inj3ctor", displayName: "Unknown Inj3ctor", avatar: "./assets/img/img-icon.png", status: "offline" }
+    ];
+    
+    // Clear button
+    if (searchClear && searchInput) {
+        searchClear.addEventListener("click", function () {
+            searchInput.value = "";
+            searchInput.focus();
+            clearResults();
+            searchClear.hidden = true;
+            
+            // Cancel any pending debounce timer
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+                debounceTimer = null;
+            }
+        });
+    }
+    
+    // Debounced search function
+    function debounceSearch(query) {
+        // Cancel any pending timer
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+        
+        // If query is empty, immediately hide results
+        if (!query || query.trim() === "") {
+            clearResults();
+            return;
+        }
+        
+        showLoading();
+        
+        debounceTimer = setTimeout(function () {
+            performSearch(query.trim());
+        }, DEBOUNCE_DELAY);
+    }
+    
+    // Actual search function - REPLACE THIS WITH REAL API CALL
+    async function searchUsers(query) {
+        // TODO: Replace with real API call:
+        // const response = await fetch('/api/search?q=' + encodeURIComponent(query));
+        // const data = await response.json();
+        // return data.users;
+        
+        // Mock implementation for demo
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                var filtered = mockUsers.filter(function (user) {
+                    var q = query.toLowerCase();
+                    return user.username.toLowerCase().includes(q) || 
+                           user.displayName.toLowerCase().includes(q);
+                });
+                resolve(filtered);
+            }, 500); // Simulate network delay
+        });
+    }
+    
+    // Perform search
+    async function performSearch(query) {
+        try {
+            var users = await searchUsers(query);
+            displayResults(users, query);
+        } catch (error) {
+            console.error("Search error:", error);
+            showNoResults(query);
+        }
+    }
+    
+    // Display search results as table
+    function displayResults(users, query) {
+        hideLoading();
+        searchTbody.innerHTML = "";
+        
+        if (users.length === 0) {
+            showNoResults(query);
+            return;
+        }
+        
+        noResults.hidden = true;
+        searchTable.hidden = false;
+        resultsCard.hidden = false;
+        
+        users.forEach(function (user) {
+            var row = document.createElement("tr");
+            
+            var avatarHtml = user.avatar 
+                ? '<img src="' + user.avatar + '" alt="' + user.username + '">'
+                : user.username.charAt(0).toUpperCase();
+            
+            var statusHtml = getStatusHtml(user.status);
+            
+            row.innerHTML = 
+                '<td>' +
+                    '<div class="inline-search-user-cell">' +
+                        '<div class="inline-search-user-avatar">' + avatarHtml + '</div>' +
+                        '<div class="inline-search-user-info">' +
+                            '<span class="inline-search-user-username">' + user.username + '</span>' +
+                            '<span class="inline-search-user-display">' + user.displayName + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</td>' +
+                '<td class="inline-search-status-cell">' + statusHtml + '</td>' +
+                '<td class="inline-search-action-cell">' +
+                    '<button type="button" data-username="' + user.username + '" data-user-id="' + user.username + '">' +
+                        '<i class="fa-solid fa-user-plus"></i>' +
+                        '<span>Add Friend</span>' +
+                    '</button>' +
+                '</td>';
+            
+            searchTbody.appendChild(row);
+        });
+        
+        // Add friend button click handlers
+        var addButtons = searchTbody.querySelectorAll('button[data-username]');
+        addButtons.forEach(function (btn) {
+            btn.addEventListener("click", function (event) {
+                event.stopPropagation();
+                var username = btn.getAttribute("data-username");
+                var userId = btn.getAttribute("data-user-id");
+                addFriendRequest(username, btn);
+                sendFriendRequest(userId);
+            });
+        });
+    }
+    
+    // Get status HTML
+    function getStatusHtml(status) {
+        var statusMap = {
+            "online": { text: "Online", class: "online" },
+            "idle": { text: "Idle", class: "offline" },
+            "dnd": { text: "Do Not Disturb", class: "pending" },
+            "offline": { text: "Offline", class: "offline" }
+        };
+        
+        var statusInfo = statusMap[status] || statusMap["offline"];
+        
+        return '<div class="status-indicator">' +
+            '<span class="status-dot ' + statusInfo.class + '"></span>' +
+            '<span class="status-text">' + statusInfo.text + '</span>' +
+        '</div>';
+    }
+    
+    // Show no results
+    function showNoResults(query) {
+        hideLoading();
+        searchTbody.innerHTML = "";
+        if (queryText) queryText.textContent = query;
+        noResults.hidden = false;
+        searchTable.hidden = true;
+        loadingSpinner.hidden = true;
+        resultsCard.hidden = false;
+    }
+    
+    // Show loading state
+    function showLoading() {
+        loadingSpinner.hidden = false;
+        noResults.hidden = true;
+        searchTable.hidden = true;
+        searchTbody.innerHTML = "";
+        resultsCard.hidden = false;
+    }
+    
+    // Hide loading state
+    function hideLoading() {
+        loadingSpinner.hidden = true;
+    }
+    
+    // Clear all results
+    function clearResults() {
+        searchTbody.innerHTML = "";
+        noResults.hidden = true;
+        loadingSpinner.hidden = true;
+        searchTable.hidden = true;
+        resultsCard.hidden = true;
+        
+        // Reset debounce timer
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+    }
+    
+    // Add friend request
+    function addFriendRequest(username, button) {
+        // TODO: Replace with real API call
+        // fetch('/api/friends/requests', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ username: username })
+        // });
+        
+        console.log("Friend request sent to:", username);
+        
+        // Update button state to "Request Sent"
+        if (button) {
+            button.classList.add("button-sent");
+            button.innerHTML = '<i class="fa-solid fa-check"></i><span>Request Sent</span>';
+            button.disabled = true;
+        }
+        
+        // Optional: Clear search after delay
+        setTimeout(function () {
+            clearResults();
+            if (searchInput) searchInput.value = "";
+            if (searchClear) searchClear.hidden = true;
+        }, 1500);
+    }
+    
+    // Send friend request function (placeholder for future use)
+    function sendFriendRequest(userId) {
+        console.log("sendFriendRequest called with userId:", userId);
+        // This function can be called from other parts of the app
+        // For now, it's a placeholder
+    }
+    
+    // Search input event listener
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            var query = searchInput.value;
+            searchClear.hidden = query === "";
+            debounceSearch(query);
+        });
+    }
+})();

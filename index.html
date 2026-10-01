@@ -235,6 +235,7 @@
                 </div>
             </div>
         </section>
+        
         <section id="friends-body">
             <div class="friends-body">
                 <section id="friends-online">
@@ -406,6 +407,41 @@
                             <span>Explore Discoverable Servers</span>
                             <i class="fa-solid fa-chevron-right"></i>
                         </a>
+                        
+                        <!-- Instagram-style Real-time Search -->
+                        <div class="inline-search-container">
+                            <div class="inline-search-header">
+                                <h3>Quick Search</h3>
+                                <p>Find users by username instantly</p>
+                            </div>
+                            <div class="inline-search-wrapper">
+                                <i class="fa-solid fa-magnifying-glass inline-search-icon"></i>
+                                <input type="text" id="inline-search-input" placeholder="Search users..." autocomplete="off">
+                                <button type="button" class="inline-search-clear" id="inline-search-clear" hidden aria-label="Clear">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                            <!-- Single unified results card -->
+                            <div class="inline-search-results-card" id="inline-search-results-card" hidden>
+                                <div class="inline-search-loading" id="inline-search-loading" hidden>
+                                    <div class="loading-spinner"></div>
+                                </div>
+                                <table class="inline-search-table" id="inline-search-table" hidden>
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="inline-search-tbody"></tbody>
+                                </table>
+                                <div class="inline-search-no-results" id="inline-search-no-results" hidden>
+                                    <i class="fa-solid fa-user-slash"></i>
+                                    <p>No users found matching "<span id="inline-search-query"></span>"</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section id="friends-empty" hidden>

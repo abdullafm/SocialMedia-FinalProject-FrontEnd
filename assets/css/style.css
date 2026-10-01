@@ -622,14 +622,18 @@ body .friends-view {
 body .friends-view .friends-header {
     width: 100%;
     min-width: 0;
-    padding: clamp(8px, 1vw, 11px) clamp(10px, 1.4vw, 15px);
-    border-bottom: 2px solid #f5f5f5;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e4e4e7;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    container-type: inline-size;
-    container-name: friends-bar;
+    gap: 12px;
+    background: #ffffff;
+}
+
+html.theme-dark body .friends-view .friends-header {
+    background: #18181b;
+    border-bottom-color: #27272a;
 }
 
 body .friends-view .friends-header .friends-header-start {
@@ -763,23 +767,34 @@ body .friends-view .friends-header .header-actions {
 body .friends-view .friends-header .friends-title {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     font-weight: 600;
-    font-size: clamp(0.95rem, 0.4vw + 0.85rem, 1rem);
-    border-right: 1px solid #e9e9eb;
+    font-size: 15px;
+    border-right: 1px solid #e4e4e7;
     width: auto;
     flex: none;
-    padding-right: 8px;
+    padding-right: 16px;
     white-space: nowrap;
+    color: #18181b;
+}
+
+html.theme-dark body .friends-view .friends-header .friends-title {
+    border-right-color: #27272a;
+    color: #fafafa;
 }
 
 body .friends-view .friends-header .friends-title h1 {
     font-size: inherit;
     font-weight: inherit;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body .friends-view .friends-header .friends-title svg path {
-    fill: #6c6f78;
+    fill: #71717a;
+}
+
+html.theme-dark body .friends-view .friends-header .friends-title svg path {
+    fill: #a1a1aa;
 }
 
 body .friends-view .friends-header .friend-filters {
@@ -799,28 +814,19 @@ body .friends-view .friends-header .friend-filters {
 }
 
 .friend-filter-glide {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    height: 25px;
-    border-radius: 4px;
-    background: #e3e5e8;
-    opacity: 0;
-    transform: translate(0, -50%);
-    transition: transform 0.18s ease, width 0.18s ease, opacity 0.18s ease;
-    pointer-events: none;
-    z-index: 0;
+    display: none;
 }
 
 .friend-filter-menu {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 14px;
-    min-height: 32px;
-    padding: 0;
+    gap: 2px;
+    min-height: 36px;
+    padding: 3px;
     background: transparent;
-    border: 0;
+    border-radius: 10px;
+    border: none;
 }
 
 .friend-filter-menu button {
@@ -830,22 +836,30 @@ body .friends-view .friends-header .friend-filters {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: 32px;
-    padding: 0 10px;
+    height: 36px;
+    padding: 0 14px;
     border: 0;
-    border-radius: 4px;
+    border-radius: 7px;
     background: transparent;
-    color: #060607;
-    font-family: inherit;
-    font-size: 14px;
+    color: #71717a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
     font-weight: 500;
+    letter-spacing: -0.01em;
     cursor: pointer;
-    transition: color 0.18s ease, background-color 0.18s ease, transform 0.12s ease;
+    transition: all 0.15s ease-in-out;
 }
 
-.friend-filter-icon,
+.friend-filter-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #71717a;
+}
+
 .friend-filter-check {
-    display: none;
+    display: none !important;
 }
 
 .friend-filter-text {
@@ -853,38 +867,521 @@ body .friends-view .friends-header .friend-filters {
 }
 
 .friend-filter-menu button:hover {
-    color: #060607;
+    background: transparent;
+    color: #18181b;
+}
+
+.friend-filter-menu button:hover .friend-filter-icon {
+    color: #18181b;
 }
 
 .friend-filter-menu button:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
 .friend-filter-menu button.active {
-    color: #060607;
-    font-weight: 500;
+    background: #e4e4e7;
+    color: #18181b;
+    font-weight: 600;
+}
+
+.friend-filter-menu button.active .friend-filter-icon {
+    color: #18181b;
 }
 
 .friend-filter-menu button[data-filter="add"] {
     margin-left: 8px;
-    background: #248046;
-    color: #ffffff;
+    background: #10b981;
+    color: #ffffff !important;
     font-weight: 600;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    transition: background-color 0.17s ease, transform 0.1s ease, box-shadow 0.17s ease;
+    padding: 0 16px;
+    box-shadow: 0 1px 2px rgba(16, 185, 129, 0.2);
+    transition: all 0.15s ease-in-out;
+}
+
+.friend-filter-menu button[data-filter="add"] .friend-filter-icon {
+    color: #ffffff !important;
+}
+
+.friend-filter-menu button[data-filter="add"] .friend-filter-text {
+    color: #ffffff !important;
 }
 
 .friend-filter-menu button[data-filter="add"]:hover {
-    background: #1f7a40;
-    color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    background: #059669;
+    color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
     transform: translateY(-1px);
 }
 
 .friend-filter-menu button[data-filter="add"]:active {
-    background: #1a6837;
+    background: #047857;
     transform: translateY(0);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(16, 185, 129, 0.2);
+}
+
+/* Dark mode styles for friend filter */
+html.theme-dark .friend-filter-menu {
+    background: transparent;
+    border: none;
+}
+
+html.theme-dark .friend-filter-menu button {
+    color: #a1a1aa;
+}
+
+html.theme-dark .friend-filter-menu button .friend-filter-icon {
+    color: #a1a1aa;
+}
+
+html.theme-dark .friend-filter-menu button:hover {
+    background: transparent;
+    color: #fafafa;
+}
+
+html.theme-dark .friend-filter-menu button:hover .friend-filter-icon {
+    color: #fafafa;
+}
+
+html.theme-dark .friend-filter-menu button.active {
+    background: #27272a;
+    color: #fafafa;
+    font-weight: 600;
+}
+
+html.theme-dark .friend-filter-menu button.active .friend-filter-icon {
+    color: #fafafa;
+}
+
+html.theme-dark .friend-filter-menu button[data-filter="add"] {
+    background: #10b981;
+    color: #ffffff;
+}
+
+html.theme-dark .friend-filter-menu button[data-filter="add"] .friend-filter-icon {
+    color: #ffffff;
+}
+
+html.theme-dark .friend-filter-menu button[data-filter="add"]:hover {
+    background: #059669;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.4);
+}
+
+/* Inline Search Container (for Add Friend section) */
+.inline-search-container {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #202225;
+}
+
+.inline-search-header {
+    margin-bottom: 16px;
+}
+
+.inline-search-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 4px 0;
+}
+
+.inline-search-header p {
+    font-size: 13px;
+    color: #b9bbbe;
+    margin: 0;
+}
+
+.inline-search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inline-search-icon {
+    position: absolute;
+    left: 12px;
+    color: #72767d;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+#inline-search-input {
+    width: 100%;
+    padding: 10px 36px 10px 36px;
+    background: #202225;
+    border: 1px solid #202225;
+    border-radius: 6px;
+    color: #dcddde;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#inline-search-input:focus {
+    border-color: #5865f2;
+    box-shadow: 0 0 0 1px #5865f2;
+}
+
+#inline-search-input::placeholder {
+    color: #72767d;
+}
+
+.inline-search-clear {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: #40444b;
+    color: #b9bbbe;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s ease;
+}
+
+.inline-search-clear:hover {
+    background: #4f545c;
+    color: #fff;
+}
+
+/* Inline Results Table - Single Unified Card */
+.inline-search-results-card {
+    margin-top: 16px;
+    width: 100%;
+    background: #2f3136;
+    border: 1px solid #202225;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.inline-search-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inline-search-table thead {
+    background: #202225;
+}
+
+.inline-search-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #b9bbbe;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #202225;
+}
+
+.inline-search-table th:first-child {
+    padding-left: 16px;
+}
+
+.inline-search-table th:last-child {
+    text-align: right;
+    padding-right: 16px;
+}
+
+.inline-search-table tbody tr {
+    border-bottom: 1px solid #202225;
+    transition: background 0.15s ease;
+}
+
+.inline-search-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.inline-search-table tbody tr:hover {
+    background: #40444b;
+}
+
+.inline-search-table td {
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+.inline-search-table td:first-child {
+    padding-left: 16px;
+}
+
+.inline-search-table td:last-child {
+    text-align: right;
+    padding-right: 16px;
+}
+
+/* User cell */
+.inline-search-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.inline-search-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #5865f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.inline-search-user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.inline-search-user-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.inline-search-user-username {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inline-search-user-display {
+    font-size: 12px;
+    color: #b9bbbe;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Status cell */
+.inline-search-status-cell {
+    font-size: 12px;
+    color: #b9bbbe;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-dot.online {
+    background: #3ba55c;
+    box-shadow: 0 0 0 2px rgba(59, 165, 92, 0.2);
+}
+
+.status-dot.offline {
+    background: #747f8d;
+}
+
+.status-dot.pending {
+    background: #faa61a;
+}
+
+.status-text {
+    font-weight: 500;
+}
+
+/* Action cell */
+.inline-search-action-cell button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #5865f2;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.inline-search-action-cell button:hover {
+    background: #4752c4;
+    transform: translateY(-1px);
+}
+
+.inline-search-action-cell button:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.inline-search-action-cell button.button-sent {
+    background: #3ba55c;
+    cursor: default;
+}
+
+.inline-search-action-cell button.button-sent:hover {
+    background: #3ba55c;
+    transform: none;
+}
+
+.inline-search-action-cell button.button-sent:active {
+    transform: none;
+}
+
+.inline-search-action-cell button.button-sent i {
+    color: #fff;
+}
+
+/* Loading state - inside single card */
+.inline-search-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #40444b;
+    border-top-color: #5865f2;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* No results - inside single card */
+.inline-search-no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    text-align: center;
+}
+
+.inline-search-no-results i {
+    font-size: 36px;
+    color: #40444b;
+    margin-bottom: 8px;
+}
+
+.inline-search-no-results p {
+    font-size: 13px;
+    color: #b9bbbe;
+    margin: 0;
+}
+
+.inline-search-no-results span {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Light mode for inline search */
+html:not(.theme-dark) .inline-search-container {
+    border-top-color: #e4e4e7;
+}
+
+html:not(.theme-dark) .inline-search-header h3 {
+    color: #18181b;
+}
+
+html:not(.theme-dark) .inline-search-header p {
+    color: #71717a;
+}
+
+html:not(.theme-dark) #inline-search-input {
+    background: #f4f4f5;
+    border-color: #e4e4e7;
+    color: #18181b;
+}
+
+html:not(.theme-dark) #inline-search-input:focus {
+    border-color: #5865f2;
+}
+
+html:not(.theme-dark) #inline-search-input::placeholder {
+    color: #a1a1aa;
+}
+
+html:not(.theme-dark) .inline-search-icon {
+    color: #a1a1aa;
+}
+
+html:not(.theme-dark) .inline-search-clear {
+    background: #e4e4e7;
+    color: #71717a;
+}
+
+html:not(.theme-dark) .inline-search-clear:hover {
+    background: #d4d4d8;
+    color: #18181b;
+}
+
+html:not(.theme-dark) .inline-search-results-card {
+    background: #ffffff;
+    border-color: #e4e4e7;
+}
+
+html:not(.theme-dark) .inline-search-table thead {
+    background: #f4f4f5;
+}
+
+html:not(.theme-dark) .inline-search-table th {
+    color: #71717a;
+    border-bottom-color: #e4e4e7;
+}
+
+html:not(.theme-dark) .inline-search-table tbody tr {
+    border-bottom-color: #f4f4f5;
+}
+
+html:not(.theme-dark) .inline-search-table tbody tr:hover {
+    background: #f4f4f5;
+}
+
+html:not(.theme-dark) .inline-search-user-username {
+    color: #18181b;
+}
+
+html:not(.theme-dark) .inline-search-user-display {
+    color: #71717a;
+}
+
+html:not(.theme-dark) .inline-search-status-cell {
+    color: #71717a;
+}
+
+html:not(.theme-dark) .inline-search-no-results i {
+    color: #e4e4e7;
+}
+
+html:not(.theme-dark) .inline-search-no-results p {
+    color: #71717a;
+}
+
+html:not(.theme-dark) .inline-search-no-results span {
+    color: #18181b;
 }
 
 /* Dropdown Menu Header: 'Friends Online' with 2 people icon */
@@ -963,12 +1460,18 @@ body .friends-view .friends-header .friend-filters {
 
 /* Green dot for Online */
 .friend-status-dot.online {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background-color: #23a55a;
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15);
     display: inline-block;
     flex-shrink: 0;
+}
+
+html.theme-dark .friend-status-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 0 8px rgba(16, 185, 129, 0.3);
 }
 
 .friend-menu-item-icon {
