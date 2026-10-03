@@ -243,10 +243,28 @@ body .conversation-sidebar:has(.discover-nav) {
     }
 }
 
+/* Geniş ekranda içerik sıkışmasın, kartlar alanı doldursun */
 @media screen and (min-width: 1600px) {
-    .discover-scroll {
-        width: min(100%, 1280px);
-        margin-inline: auto;
+    .discover-grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    }
+}
+
+/* Tablet: kategori listesini daralt */
+@media screen and (min-width: 721px) and (max-width: 900px) {
+    body .conversation-sidebar:has(.discover-nav) {
+        width: 200px;
+    }
+}
+
+/* Dokunmatik cihazlarda min. 44px hedef */
+@media (pointer: coarse) {
+    .discover-cat {
+        min-height: 44px;
+    }
+
+    .discover-phone-cats .discover-cat {
+        min-height: 44px;
     }
 }
 
@@ -293,4 +311,3 @@ html.theme-dark .discover-banner p {
 html.theme-dark .discover-search input {
     color: #060607 !important;
 }
-

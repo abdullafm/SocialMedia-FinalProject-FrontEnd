@@ -1110,14 +1110,39 @@ body .social-view {
     }
 }
 
+/* Geniş ekranda akış sıkışmasın: tüm alanı kullan */
 @media screen and (min-width: 1600px) {
     .social-stage {
-        align-items: center;
+        align-items: stretch;
     }
 
     .social-bar,
     .social-panel,
     .post-composer {
-        width: min(100%, 760px);
+        width: 100%;
+    }
+
+    .social-rail {
+        width: 280px;
+    }
+}
+
+/* Dokunmatik cihazlarda min. 44px hedef */
+@media (pointer: coarse) {
+    .tool-btn,
+    .line-btn,
+    .comment-form button.emoji-open {
+        width: 44px;
+        height: 44px;
+    }
+
+    .like-btn,
+    .comment-open {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .social-rail button {
+        min-height: 44px;
     }
 }

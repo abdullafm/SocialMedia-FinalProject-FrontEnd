@@ -703,6 +703,12 @@ section#dm-profile.no-motion .dm-profile {
 }
 
 @media (max-width: 640px) {
+    .dm-compose {
+        margin: 0 8px 12px;
+        padding: 0 10px;
+        gap: 8px;
+    }
+
     .dm-bar {
         padding-left: 10px;
         gap: 8px;
@@ -722,8 +728,30 @@ section#dm-profile.no-motion .dm-profile {
     }
 }
 
-@media screen and (min-width: 1800px) {
-    .dm-scroll {
-        padding-inline: max(16px, calc((100% - 1100px) / 2));
+/* Dokunmatik cihazlarda min. 44px hedef */
+@media (pointer: coarse) {
+    .dm-bar-tools button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .dm-compose {
+        min-height: 48px;
+    }
+
+    .dm-compose > button,
+    .dm-compose-tools button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .dm-banner button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .dm-wave button,
+    .dm-full {
+        min-height: 44px;
     }
 }

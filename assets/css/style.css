@@ -620,6 +620,9 @@ body .friends-view {
 }
 
 body .friends-view .friends-header {
+    container: friends-bar / inline-size;
+    position: relative;
+    z-index: 20;
     width: 100%;
     min-width: 0;
     padding: 16px 20px;
@@ -5910,6 +5913,7 @@ section#group-chat:not([hidden]) {
     flex-direction: column;
     min-width: 0;
     height: 100vh;
+    height: 100dvh;
     position: relative;
 }
 
@@ -6493,15 +6497,11 @@ body.call-resizing {
 }
 
 @media screen and (min-width: 1600px) {
-    body .friends-view .friends-body {
-        justify-content: center;
-    }
-
     body .friends-view .friends-body .friends-online,
     body .friends-view .friends-body .friends-add {
-        flex: 1 1 720px;
+        flex: 1 1 auto;
         width: auto;
-        max-width: 1080px;
+        max-width: none;
     }
 
     body .friends-view .friends-body .friends-empty {
@@ -6512,5 +6512,32 @@ body.call-resizing {
     body .friends-view .friends-body .active-now {
         width: min(35%, 420px);
         flex: none;
+    }
+}
+
+/* ===== RESPONSIVE EKLERI ===== */
+@media screen and (min-width: 721px) and (max-width: 900px) {
+    body .conversation-sidebar {
+        width: 200px;
+    }
+
+    body .friends-view .friends-header {
+        padding: 12px;
+    }
+}
+
+@media (pointer: coarse) {
+    .online-act {
+        width: 44px;
+        height: 44px;
+    }
+
+    .friend-filter-menu button {
+        min-height: 44px;
+    }
+
+    body .conversation-sidebar .direct-messages .friend-list .friend-item,
+    body .conversation-sidebar .shortcut-item {
+        min-height: 44px;
     }
 }

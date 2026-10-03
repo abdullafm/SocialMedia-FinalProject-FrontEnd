@@ -1379,6 +1379,7 @@ body .conversation-sidebar.server-channels.voice-on {
     width: 280px;
     flex: none;
     height: 100vh;
+    height: 100dvh;
     overflow: auto;
     padding: 56px 12px 24px 16px;
     background: #f2f3f5;
@@ -1486,6 +1487,7 @@ body .conversation-sidebar.server-channels.voice-on {
     flex: 1;
     min-width: 0;
     height: 100vh;
+    height: 100dvh;
     overflow: auto;
     padding: 56px 40px 80px 72px;
 }
@@ -2787,6 +2789,19 @@ body .conversation-sidebar.server-channels.voice-on {
     display: none !important;
 }
 
+.members-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    display: none;
+    touch-action: manipulation;
+}
+
+.members-backdrop:not([hidden]) {
+    display: block;
+}
+
 .server-member {
     width: 100%;
     border: 0;
@@ -3865,6 +3880,10 @@ body .conversation-sidebar.server-channels.voice-on {
         box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
     }
 
+    .members-backdrop:not([hidden]) {
+        display: block !important;
+    }
+
     .server-view {
         position: relative;
     }
@@ -3997,21 +4016,28 @@ html.theme-dark .server-voice-bar span {
 }
 
 @media (max-width: 900px) {
-    .server-voice-call {
-        flex-direction: column;
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
+    .server-voice .server-voice-call,
     .server-voice.is-full .server-voice-call {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
+        justify-content: center;
+        gap: 8px;
+        padding: 64px 12px 96px;
+        overflow-y: auto;
     }
 
+    /* Kutucuklar dikey düzende tam genişlik alsın, avatara daralmasın */
+    .server-voice .server-voice-tile,
+    .server-voice .server-voice-activity,
+    .server-voice.is-full .server-voice-tile,
     .server-voice.is-full .server-voice-activity {
+        flex: 1 1 0;
         width: 100%;
-        height: min(280px, 42%);
-        flex: 0 0 auto;
+        max-width: none;
+        height: auto;
+        min-height: 160px;
+        max-height: 420px;
+        align-self: stretch;
     }
 
     .server-voice-dock-side {
@@ -4019,10 +4045,27 @@ html.theme-dark .server-voice-bar span {
     }
 }
 
+@media (max-width: 480px) {
+    .server-voice-tile img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .server-voice-dock {
+        left: 8px;
+        right: 8px;
+        bottom: 10px;
+    }
+}
+
 html.theme-dark .server-members,
 html.theme-dark .server-search {
     background: #2b2d31 !important;
     border-color: rgba(78, 80, 88, 0.48);
+}
+
+html.theme-dark .members-backdrop {
+    background: rgba(0, 0, 0, 0.7);
 }
 
 html.theme-dark .server-member {
@@ -4718,14 +4761,26 @@ html.theme-dark .role-colors button.on {
     box-shadow: 0 0 0 2px #1e1f22, 0 0 0 4px #f2f3f5;
 }
 
-@media screen and (min-width: 1800px) {
-    .server-messages {
-        padding-inline: max(16px, calc((100% - 1100px) / 2));
-    }
-}
-
 @media screen and (max-width: 720px) {
     .server-members.force {
         width: min(240px, 100%);
+    }
+}
+
+/* ===== RESPONSIVE EKLERI ===== */
+@media (pointer: coarse) {
+    .server-bar-tools button,
+    .server-settings .server-bar button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .server-search {
+        height: 36px;
+    }
+
+    .server-member,
+    .server-banner {
+        min-height: 44px;
     }
 }

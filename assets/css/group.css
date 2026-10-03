@@ -659,6 +659,16 @@ section#group-members.no-motion .group-members {
 }
 
 @media (max-width: 640px) {
+    .group-compose {
+        margin: 0 8px 12px;
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .group-scroll {
+        padding: 12px;
+    }
+
     .group-bar {
         padding-left: 10px;
         gap: 8px;
@@ -678,8 +688,29 @@ section#group-members.no-motion .group-members {
     }
 }
 
-@media screen and (min-width: 1800px) {
-    .group-scroll {
-        padding-inline: max(16px, calc((100% - 1100px) / 2));
+/* Dokunmatik cihazlarda min. 44px hedef */
+@media (pointer: coarse) {
+    .group-bar-tools button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .group-compose {
+        min-height: 48px;
+    }
+
+    .group-compose > button,
+    .group-compose-tools button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .group-member {
+        min-height: 44px;
+    }
+
+    .group-actions button,
+    #group-invite-side {
+        min-height: 44px;
     }
 }

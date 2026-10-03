@@ -943,6 +943,10 @@
         var narrow = window.matchMedia("(max-width: 1100px)").matches;
         if (narrow) {
             members.classList.toggle("force");
+            var backdrop = document.getElementById("members-backdrop");
+            if (backdrop) {
+                backdrop.hidden = !members.classList.contains("force");
+            }
         } else {
             members.classList.toggle("off");
         }
@@ -953,6 +957,20 @@
 
     var memberButtons = document.querySelectorAll(".server-members-toggle");
     for (var i = 0; i < memberButtons.length; i++) memberButtons[i].addEventListener("click", toggleMembers);
+
+    // Close members panel when clicking backdrop in mobile mode
+    var backdrop = document.getElementById("members-backdrop");
+    if (backdrop) {
+        backdrop.addEventListener("click", function () {
+            var members = membersPanel();
+            if (members && members.classList.contains("force")) {
+                members.classList.remove("force");
+                backdrop.hidden = true;
+                var buttons = document.querySelectorAll(".server-members-toggle");
+                for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove("on");
+            }
+        });
+    }
 
     function closeMenu() {
         if (!menu || !menuOpen) return;
